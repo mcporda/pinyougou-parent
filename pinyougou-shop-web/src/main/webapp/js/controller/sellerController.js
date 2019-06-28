@@ -1,6 +1,6 @@
  //控制层 
-app.controller('sellerController' ,function($scope,$controller   ,sellerService){	
-	
+app.controller('sellerController' ,function($scope,$controller,sellerService){
+
 	$controller('baseController',{$scope:$scope});//继承
 	
     //读取列表数据绑定到表单中  
@@ -37,7 +37,7 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 		if($scope.entity.id!=null){//如果有ID
 			serviceObject=sellerService.update( $scope.entity ); //修改  
 		}else{
-			serviceObject=sellerService.add( $scope.entity  );//增加 
+			serviceObject=sellerService.add( $scope.entity);//增加
 		}				
 		serviceObject.success(
 			function(response){
@@ -74,6 +74,19 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 				$scope.list=response.rows;	
 				$scope.paginationConf.totalItems=response.total;//更新总记录数
 			}			
+		);
+	}
+	//新增注册
+	$scope.add=function(){
+		sellerService.add($scope.entity).success(
+			function(response){
+				if(response.success){
+					//如果注册成功,跳转登录页
+					 location.href = "shoplogin.html";
+				}else{
+					alert(response.message);
+				}
+			}
 		);
 	}
     
